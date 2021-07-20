@@ -1,4 +1,14 @@
-import { Box, Button, Input, Link, VStack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Input,
+  Link,
+  VStack,
+  Text,
+  FormControl,
+  FormHelperText,
+  FormLabel,
+} from "@chakra-ui/react";
 import Head from "next/head";
 import Image from "next/image";
 import React, { FormEvent, useState } from "react";
@@ -39,21 +49,27 @@ export default function Home() {
             alignItems="center"
             justifyContent="center"
           >
-            <Input
-              variant="filled"
-              required
-              m="2"
-              type="date"
-              onChange={(e) => setBirthDay(new Date(e.target.value))}
-            />
-            <Input
-              m="2"
-              required
-              type="number"
-              variant="filled"
-              value={luckyNumber}
-              onChange={(e) => setLuckyNumber(parseInt(e.target.value))}
-            />
+            <FormControl m="2">
+              <FormLabel>Enter your birthday</FormLabel>
+              <Input
+                variant="filled"
+                required
+                type="date"
+                onChange={(e) => setBirthDay(new Date(e.target.value))}
+              />
+              <FormHelperText>We do not store any data.</FormHelperText>
+            </FormControl>
+            <FormControl m="2">
+              <FormLabel>Enter your lucky number</FormLabel>
+              <Input
+                required
+                type="number"
+                variant="filled"
+                value={luckyNumber}
+                onChange={(e) => setLuckyNumber(parseInt(e.target.value))}
+              />
+            </FormControl>
+
             <Button
               variant="solid"
               colorScheme="messenger"
