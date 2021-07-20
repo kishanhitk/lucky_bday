@@ -22,6 +22,12 @@ export default function Home() {
   const [birthDay, setBirthDay] = useState(new Date());
   const [isLucky, setIsLucky] = React.useState(false);
   const [isLuckyVisible, setIsLuckyVisible] = React.useState(false);
+  const handleReset = () => {
+    setLuckyNumber(Math.floor(Math.random() * 100));
+    setBirthDay(new Date());
+    setIsLucky(false);
+    setIsLuckyVisible(false);
+  };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -77,7 +83,11 @@ export default function Home() {
             >
               Check
             </Button>
-            <Button variant="ghost" colorScheme="messenger">
+            <Button
+              variant="ghost"
+              colorScheme="messenger"
+              onClick={handleReset}
+            >
               Reset
             </Button>
             {isLuckyVisible && (
