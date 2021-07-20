@@ -1,8 +1,25 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import { Box, Button, Input, Link, VStack, Text } from "@chakra-ui/react";
+import Head from "next/head";
+import Image from "next/image";
+import React, { FormEvent, useState } from "react";
+import styles from "../styles/Home.module.css";
+import { checkIfBdayIsLucky } from "../utils/luckyCalculator";
 
 export default function Home() {
+  const [luckyNumber, setLuckyNumber] = React.useState(
+    Math.floor(Math.random() * 100)
+  );
+  const [birthDay, setBirthDay] = useState(new Date());
+  const [isLucky, setIsLucky] = React.useState(false);
+  const [isLuckyVisible, setIsLuckyVisible] = React.useState(false);
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    console.log(luckyNumber, birthDay.getDate());
+    setIsLucky(checkIfBdayIsLucky(birthDay, luckyNumber));
+    setIsLuckyVisible(true);
+    console.log(checkIfBdayIsLucky(birthDay, luckyNumber));
+  };
   return (
     <div className={styles.container}>
       <Head>
@@ -12,58 +29,74 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+        <h1 className={styles.title}>The Lucky Birthday</h1>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
+        <p className={styles.description}>Check if your b&apos;day is lucky.</p>
+        <Box bg="blue.100" p="5" rounded="10">
+          <VStack
+            align="center"
+            justify="center"
+            alignItems="center"
+            justifyContent="center"
           >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
+            <Input
+              variant="filled"
+              required
+              m="2"
+              type="date"
+              onChange={(e) => setBirthDay(new Date(e.target.value))}
+            />
+            <Input
+              m="2"
+              required
+              type="number"
+              variant="filled"
+              value={luckyNumber}
+              onChange={(e) => setLuckyNumber(parseInt(e.target.value))}
+            />
+            <Button
+              variant="solid"
+              colorScheme="messenger"
+              onClick={handleSubmit}
+            >
+              Check
+            </Button>
+            <Button variant="ghost" colorScheme="messenger">
+              Reset
+            </Button>
+            {isLuckyVisible && (
+              <>
+                <Text>
+                  {" "}
+                  {isLucky
+                    ? "Yay!! Your Birthday is Lucky"
+                    : "Sorry! You missed it."}
+                </Text>
+                {isLucky ? (
+                  <Image
+                    src="https://media.giphy.com/media/YnBntKOgnUSBkV7bQH/giphy.gif"
+                    alt="Happy Gif"
+                    height={100}
+                    width={100}
+                  />
+                ) : (
+                  <Image
+                    src="https://media.giphy.com/media/BEob5qwFkSJ7G/giphy.gif"
+                    alt="Happy Gif"
+                    height={100}
+                    width={100}
+                  />
+                )}
+              </>
+            )}
+          </VStack>
+        </Box>
       </main>
-
       <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
+        <Link href="https://kishans.in" target="_blank">
+          Built by Kishan
+        </Link>
       </footer>
     </div>
-  )
+  );
 }
