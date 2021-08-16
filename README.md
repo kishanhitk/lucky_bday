@@ -1,4 +1,6 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Lucky B'day
+## Is your birthday lukcy?
+### [Find out](https://youthful-ride-f2326b.netlify.app/)
 
 ## Getting Started
 
